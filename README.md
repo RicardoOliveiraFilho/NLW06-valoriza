@@ -104,6 +104,11 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
  $ yarn install ou
  $ npm i 
  
+ # Com as dependências instaladas execute o seguinte comando - ele fará com que as tabelas sejam criadas
+ $ npm run typeorm migration:run
+ ou
+ $ yarn typeorm migration:run
+ 
  # Execute a aplicação em modo de desenvolvimento
  $ npm run dev 
  $ yarn dev
@@ -117,6 +122,8 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
  
   - [Node.js](https://nodejs.org/pt-br/)
   - [Typescript](https://www.typescriptlang.org/)
+  - [SQLite](https://www.sqlite.org/index.html)
+  - [TYPEORM](https://typeorm.io/#/)
 
 ### Autor <a id="autor"> </a> - <a href="#topo">Topo</a>
 
