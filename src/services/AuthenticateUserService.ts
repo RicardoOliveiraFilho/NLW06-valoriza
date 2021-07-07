@@ -26,7 +26,7 @@ class AuthenticateUserService {
 
     const token = sign(
       { email: user.email },
-      '3f905e9d392f880be3239b3b3af34389',
+      process.env.APP_API_SECRET,
       {
         subject: user.id,
         expiresIn: '1d'
