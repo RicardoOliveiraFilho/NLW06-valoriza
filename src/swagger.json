@@ -1,0 +1,473 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Valoriza - Espalhe elogios entre os membros de sua equipe!",
+    "description": "Essa api permite que usuários elogiem uns aos outros!",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "API de Teste"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Autenticação de Usuário",
+        "description": "Essa rota permitirá que um usuário se autentique, possibilitando o acesso de rotas privadas",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth Request"
+              },
+              "examples": {
+                "Credenciais": {
+                  "value": {
+                    "email": "user_admin@mail.com",
+                    "password": "@admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Auth Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Email/Password Incorrect!"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Cadastro de Usuário",
+        "description": "Essa rota permitirá o cadastro de usuários",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User Request"
+              },
+              "examples": {
+                "Usuário Administrador": {
+                  "value": {
+                    "name": "Usuário Admin",
+                    "email": "user_admin@mail.com",
+                    "password": "@admin",
+                    "admin": true
+                  }
+                },
+                "Usuário Comum": {
+                  "value": {
+                    "name": "Usuário Teste",
+                    "email": "user_test@mail.com",
+                    "password": "@teste"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Email incorrect or User already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listagem de Usuários",
+        "description": "Essa rota retornará uma lista de usuários",
+        "tags": ["Users"],
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User Response"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/compliments/send": {
+      "get": {
+        "summary": "Listagem de Elogios enviados pelo Usuário Logado",
+        "description": "Essa rota retornará uma lista de elogios realizados pelo usuário logado",
+        "tags": ["Users"],
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Compliment Response"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/compliments/receive": {
+      "get": {
+        "summary": "Listagem de Elogios recebidos pelo Usuário Logado",
+        "description": "Essa rota retornará uma lista de elogios que o usuário logado recebeu",
+        "tags": ["Users"],
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Compliment Response"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tags": {
+      "post": {
+        "summary": "Cadastro de Tags - Tipos/Classes de Elogios",
+        "description": "Essa rota permitirá que usuários administradores cadastrem tags",
+        "tags": ["Tags"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag Request"
+              },
+              "examples": {
+                "Tag": {
+                  "value": {
+                    "name": "Inspiração"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Tag Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Incorrect name! or Tag already exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listagem de Tags",
+        "description": "Essa rota retornará uma lista de Tags",
+        "tags": ["Tags"],
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tag Response"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/compliments": {
+      "post": {
+        "summary": "Cadastro de Elogios",
+        "description": "Essa rota permitirá que usuários logados elogiem outros usuários",
+        "tags": ["Compliments"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Compliment Request"
+              },
+              "examples": {
+                "Compliment": {
+                  "value": {
+                    "user_receiver": "157d2e80-55c1-46a0-9418-a6dab58b6b8a",
+                    "tag_id": "70dc5f4d-648a-40dc-9852-947eaa006763",
+                    "message": "Um ótimo exemplo de inspiração!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Compliment Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Incorrect User Receiver! or 'User Receiver does not exist!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Auth Request": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "require": true
+          },
+          "password": {
+            "type": "string",
+            "require": true
+          }
+        }
+      },
+      "Auth Response": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "User Request": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "require": true
+          },
+          "email": {
+            "type": "string",
+            "require": true
+          },
+          "password": {
+            "type": "string",
+            "require": true
+          },
+          "admin": {
+            "type": "boolean",
+            "default": false,
+            "require": false
+          }
+        }
+      },
+      "User Response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "boolean",
+            "default": "true or false"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Tag Request": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "require": true
+          }
+        }
+      },
+      "Tag Response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Compliment Request": {
+        "type": "object",
+        "properties": {
+          "user_receiver": {
+            "type": "string",
+            "require": true
+          },
+          "tag_id": {
+            "type": "string",
+            "require": true
+          },
+          "message": {
+            "type": "string",
+            "require": true
+          }
+        }
+      },
+      "Compliment Response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user_sender": {
+            "type": "string"
+          },
+          "user_receiver": {
+            "type": "string"
+          },
+          "tag_id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

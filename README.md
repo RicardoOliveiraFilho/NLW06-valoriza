@@ -66,6 +66,9 @@
   </tr>
 </table>
 
+Para mais detalhes sobre os endpoints da aplicação, acesse sua documentação caso ela
+esteja em execução através do endereço: [Docs](http://localhost:3000/api-docs)
+
 <h4  align="left">
 Projeto finalizado ✔
 </h4>

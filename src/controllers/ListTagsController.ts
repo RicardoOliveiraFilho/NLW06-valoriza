@@ -7,7 +7,11 @@ class ListTagsController {
     
     const tags = await listTagsService.execute();
 
-    return res.json(tags);
+    if (tags === undefined || tags.length == 0) {
+      return res.status(204).json(tags);
+    }
+
+    return res.status(200).json(tags);
   }
 }
 

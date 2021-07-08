@@ -7,7 +7,11 @@ class ListUsersController {
 
     const users = await listUsersService.execute();
 
-    return res.json(users);
+    if (users === undefined || users.length == 0) {
+      return res.status(204).json(users);
+    }
+
+    return res.status(200).json(users);
   }
 }
 

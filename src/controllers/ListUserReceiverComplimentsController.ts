@@ -9,7 +9,11 @@ class ListUserReceiverComplimentsController {
 
     const compliments = await listUserReceiverComplimentsService.execute(user_id);
 
-    return res.json(compliments);
+    if (compliments === undefined || compliments.length == 0) {
+      return res.status(204).json(compliments);
+    }
+
+    return res.status(200).json(compliments);
   }
 }
 
