@@ -66,9 +66,6 @@
   </tr>
 </table>
 
-Para mais detalhes sobre os endpoints da aplicação, acesse sua documentação caso ela
-esteja em execução através do endereço: [Docs](http://localhost:3000/api-docs)
-
 <h4  align="left">
 Projeto finalizado ✔
 </h4>
@@ -118,6 +115,9 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
  
  # O servidor iniciará na porta:3000
  # Acesse http://localhost:3000 em qualquer navegador de sua máquina.
+ 
+ # Para mais detalhes sobre os endpoints da aplicação, acesse sua documentação através do endereço http://localhost:3000/api-docs
+ # O Servidor deve estar em execução para poder acessar a documentação...
  ````
 
 ### Tecnologias<a id="tecnologias"></a> - <a href="#topo">Topo</a>
